@@ -1,0 +1,1 @@
+Como le dije en el mensaje del blackboard, no se porque no me dejaba, se subia la carpeta pero vacia, ahi ya lo pude solucionar, igual puede verificar que lo del zip es igual a lo que he subido, no he cambiado nada, solo tenia ese problema, espero me considere, gracias.
