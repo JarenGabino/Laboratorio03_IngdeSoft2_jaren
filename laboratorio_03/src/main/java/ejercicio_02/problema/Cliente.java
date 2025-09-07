@@ -10,19 +10,24 @@ package ejercicio_02.problema;
  */
 public class Cliente {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        GameElementCreator creator = new GameElementCreator();
+    private static void demo(GameElementFactory factory) {
+        Character warrior = factory.createWarrior();
+        Weapon sword = factory.createWeapon();
 
-        // ❌ PROBLEMA: Nada garantiza que sean compatibles
-        Character pcWarrior = creator.createCharacter("PC", "Warrior");
-        Weapon mobileSwold = creator.createWeapon("Mobile", "Sword"); // Error de compatibilidad!
+        System.out.println(warrior.getInfo());
+        warrior.attack();
 
-        pcWarrior.attack();
-        mobileSwold.use(); // Inconsistencia visual!
+        System.out.println(sword.getInfo());
+        sword.use();
+
+        System.out.println("-----------------------------------------------");
     }
 
+    public static void main(String[] args) {
+        GameElementFactory pcFactory = new PCFactory();
+        GameElementFactory mobileFactory = new MobileFactory();
+
+        demo(pcFactory);
+        demo(mobileFactory);
+    }
 }

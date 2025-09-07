@@ -10,38 +10,37 @@ package ejercicio_03.problema;
  */
 public class GameConfig {
 
-    private String databaseUrl;
-    private boolean debugMode;
-    private int maxPlayers;
+    private static volatile GameConfig instance; // visibilidad entre hilos
 
-    // Constructor público permite múltiples instancias
-    public GameConfig() {
-        this.databaseUrl = "jdbc:mysql://localhost:3306/gamedb";
-        this.debugMode = false;
-        this.maxPlayers = 100;
+    private String databaseUrl = "jdbc:mysql://localhost:3306/game_db";
+    private boolean debugMode = false;
+    private int maxPlayers = 4;
+
+    private GameConfig() { }
+
+    public static GameConfig getInstance() {
+        if (instance == null) {
+            synchronized (GameConfig.class) {
+                if (instance == null) {
+                    instance = new GameConfig();
+                }
+            }
+        }
+        return instance;
     }
 
-    public String getDatabaseUrl() {
-        return databaseUrl;
-    }
+    public String getDatabaseUrl() { return databaseUrl; }
+    public void setDatabaseUrl(String databaseUrl) { this.databaseUrl = databaseUrl; }
 
-    public void setDatabaseUrl(String url) {
-        this.databaseUrl = url;
-    }
+    public boolean isDebugMode() { return debugMode; }
+    public void setDebugMode(boolean debugMode) { this.debugMode = debugMode; }
 
-    public boolean isDebugMode() {
-        return debugMode;
-    }
+    public int getMaxPlayers() { return maxPlayers; }
+    public void setMaxPlayers(int maxPlayers) { this.maxPlayers = maxPlayers; }
 
-    public void setDebugMode(boolean debug) {
-        this.debugMode = debug;
-    }
-
-    public int getMaxPlayers() {
-        return maxPlayers;
-    }
-
-    public void setMaxPlayers(int max) {
-        this.maxPlayers = max;
+    @Override
+    public String toString() {
+        return "GameConfig{databaseUrl='" + databaseUrl + "', debugMode=" + debugMode +
+               ", maxPlayers=" + maxPlayers + "}";
     }
 }

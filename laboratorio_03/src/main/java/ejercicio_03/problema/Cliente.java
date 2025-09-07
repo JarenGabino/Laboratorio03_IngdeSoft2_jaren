@@ -9,19 +9,30 @@ package ejercicio_03.problema;
  * @author jacks
  */
 public class Cliente {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
-        GameSession session = new GameSession();
-        NetworkManager network = new NetworkManager();
-        DatabaseManager database = new DatabaseManager();
+        // Configurar una sola vez la instancia compartida
+        GameConfig cfg = GameConfig.getInstance();
+        cfg.setDatabaseUrl("jdbc:postgresql://prod-db:5432/game");
+        cfg.setDebugMode(true);
+        cfg.setMaxPlayers(8);
 
-        session.startSession();    // maxPlayers = 50, debug = false
-        network.connect();         // debug = true (inconsistente!)
-        database.saveData();       // databaseUrl diferente (inconsistente!)
+        // Config de red global (enum singleton)
+        NetworkConfig net = NetworkConfig.INSTANCE;
+        net.setEndpoint("https://net.prod.game.com"); 
+
+        // Uso en las demás clases
+        GameSession session = new GameSession();
+        NetworkManager netMgr = new NetworkManager();
+        DatabaseManager dbMgr = new DatabaseManager();
+
+        session.startSession();
+        netMgr.connect();
+        dbMgr.saveData();
+
+        // Comprobación de unicidad (opcional)
+        System.out.println("cfg hash: " + System.identityHashCode(cfg) + " vs "
+                + System.identityHashCode(GameConfig.getInstance()));
+        System.out.println("net hash: " + System.identityHashCode(net) + " vs "
+                + System.identityHashCode(NetworkConfig.INSTANCE));
     }
-    
 }

@@ -11,15 +11,14 @@ package ejercicio_03.problema;
  */
 public class DatabaseManager {
 
-    private GameConfig config;
+    private final GameConfig config;
 
     public DatabaseManager() {
-        this.config = new GameConfig(); //  Tercera instancia
-        config.setDatabaseUrl("jdbc:mysql://production:3306/gamedb"); // Configuración diferente
+        this.config = GameConfig.getInstance();
     }
 
     public void saveData() {
-        System.out.println("Guardando en: " + config.getDatabaseUrl());
-        System.out.println("Máximo jugadores permitidos: " + config.getMaxPlayers());
+        System.out.println("[DatabaseManager] Usando " + config);
+        System.out.println("Guardando datos en " + config.getDatabaseUrl() + " ...");
     }
 }

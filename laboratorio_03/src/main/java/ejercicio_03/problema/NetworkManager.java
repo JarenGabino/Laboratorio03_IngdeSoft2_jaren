@@ -10,15 +10,19 @@ package ejercicio_03.problema;
  */
 public class NetworkManager {
 
-    private GameConfig config;
+    private final GameConfig gameConfig;
+    private final NetworkConfig networkConfig;
 
     public NetworkManager() {
-        this.config = new GameConfig(); //  Otra instancia diferente
-        config.setDebugMode(true); // Configuración diferente
+        this.gameConfig = GameConfig.getInstance();
+        this.networkConfig = NetworkConfig.INSTANCE;
     }
 
     public void connect() {
-        System.out.println("Conectando a: " + config.getDatabaseUrl());
-        System.out.println("Debug mode: " + config.isDebugMode());
+        System.out.println("[NetworkManager] Usando " + networkConfig);
+        if (gameConfig.isDebugMode()) {
+            System.out.println("[NetworkManager] Modo DEBUG activo");
+        }
+        System.out.println("Conectando a " + networkConfig.getEndpoint() + " ...");
     }
 }

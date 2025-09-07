@@ -10,16 +10,14 @@ package ejercicio_03.problema;
  */
 public class GameSession {
 
-    private GameConfig config;
+    private final GameConfig config;
 
     public GameSession() {
-        this.config = new GameConfig(); //  Nueva instancia
-        config.setMaxPlayers(50); // Configuración específica
+        this.config = GameConfig.getInstance();
     }
 
     public void startSession() {
-        System.out.println("Iniciando sesión...");
-        System.out.println("Máximo jugadores: " + config.getMaxPlayers());
-        System.out.println("Debug mode: " + config.isDebugMode());
+        System.out.println("[GameSession] Config actual: " + config);
+        System.out.println("Iniciando sesión con maxPlayers=" + config.getMaxPlayers() + " ...");
     }
 }
